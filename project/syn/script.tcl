@@ -1,17 +1,18 @@
 # 1. 读入设计
 read_verilog ../rtl/led_test.v
 
-# 2. 设置顶层
-synth -top led_test
+# 2. 读入时序约束 Yosys 软件该版本没有
+#read_sdc constraints.sdc
 
-# 3. 常规优化（工艺无关）
+# 3. 设置顶层并优化
+synth -top led_test
 proc; opt
 
 # 4. 映射到 Nangate 标准单元
 #    将 RTL 中的寄存器、组合逻辑映射到库的具体单元
 techmap -map /dev/null                      # 清空内置映射
 dfflibmap -liberty ../libs/Nangate45/NangateOpenCellLibrary_typical.lib
-abc -liberty ../libs/Nangate45/NangateOpenCellLibrary_typical.lib
+abc -liberty ../libs/Nangate45/NangateOpenCellLibrary_typical.lib -D 20000
 
 # 5. 清理与优化
 opt
