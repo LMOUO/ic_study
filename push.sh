@@ -12,6 +12,7 @@ cd "$REPO_ROOT"
 # 删除仿真产生的临时文件（可选）
 echo "清理临时文件..."
 rm -f project/sim/*.vvp project/sim/*.vcd
+rm -f project/syn/*.log project/sim/*.v
 
 # 提交信息，默认为 "更新代码"
 MSG=${1:-"更新代码"}
