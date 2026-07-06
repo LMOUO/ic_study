@@ -5,7 +5,7 @@ GTKWAVE  = gtkwave
 
 # 文件定义
 RTL      = ../rtl/led_test.v
-TB       = ../tb/tb_led_test.sv
+TB       = ../tb/tb_led_test.v
 TOP      = tb_led_test
 VCD      = wave.vcd
 
