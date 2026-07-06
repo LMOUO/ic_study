@@ -1,0 +1,30 @@
+# .gitpod.yml
+image:
+  file: .gitpod.Dockerfile
+
+vscode:
+  extensions:
+    # Verilog/SystemVerilog 语法高亮和代码片段
+    - eirikpre.systemverilog
+    # Tcl 语法支持（方便你写约束脚本）
+    - bitwise.tcl
+    # Waveform 查看可以在浏览器中直接看 VCD？（GTKWave 仍需本地 X11，后面会说替代方案）
+    # 这里先不装，用终端方式看波形
+
+tasks:
+  - init: |
+      echo "Tools installed: iverilog, vvp, gtkwave, yosys"
+    command: |
+      echo "Welcome to your ASIC Frontend Lab!"
+      echo ""
+      echo "Available tools:"
+      echo "  iverilog  - Verilog compiler/simulator"
+      echo "  vvp       - Simulation runtime"
+      echo "  gtkwave   - Waveform viewer (requires X11 forwarding)"
+      echo "  yosys     - Open source logic synthesis"
+      echo ""
+      echo "Quick start:"
+      echo "  cd project"
+      echo "  make sim"
+      echo "  make view"
+      echo ""
