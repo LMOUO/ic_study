@@ -1,4 +1,4 @@
-cat > project/sim/Makefile << 'EOF'
+
 IVERILOG = iverilog
 VVP      = vvp
 GTKWAVE  = gtkwave
