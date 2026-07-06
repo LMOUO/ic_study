@@ -1,4 +1,3 @@
-
 IVERILOG = iverilog
 VVP      = vvp
 GTKWAVE  = gtkwave
@@ -23,4 +22,4 @@ clean:
 	rm -f $(TOP).vvp $(VCD)
 
 .PHONY: all sim compile view clean
-EOF
+	EOF
