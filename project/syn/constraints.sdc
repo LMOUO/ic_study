@@ -1,9 +1,3 @@
-# 时钟定义
-create_clock -name sys_clk -period 20 [get_ports sys_clk]
-
-# 时钟不确定性（抖动 + 偏斜）
-set_clock_uncertainty 0.3 [get_clocks sys_clk]
-
 # 同步复位，不需要特殊约束，但要设输入延迟
 # 输入延迟：外部逻辑在时钟沿前 2ns 将 sys_rst_n 稳定
 set_input_delay -clock sys_clk 2.0 [get_ports sys_rst_n]
@@ -12,26 +6,42 @@ set_input_delay -clock sys_clk 2.0 [get_ports sys_rst_n]
 # 输出延迟：外部电路要求在时钟沿后 3ns 内得到 o_led
 set_output_delay -clock sys_clk 3.0 [get_ports o_led]
 
+
+# 时钟定义 
+create_clock -name sys_clk -period 20.000 [get_ports sys_clk]
+
+# 时钟不确定性（抖动 + 偏斜） 给 sys_clk 增加 0.300 ns 的不确定性 set - 0.3 hold + 0.1
+set_clock_uncertainty -setup 0.300 [get_clocks sys_clk]
+set_clock_uncertainty -hold  0.100 [get_clocks sys_clk]
+
+#输入最大延迟，外部输入 sys_rst_n 最晚在时钟边沿后 2.000 ns 到达本芯片。
+#可以理解为：外部电路已经消耗了 2 ns 时间，所以芯片内部留给 setup 的时间减少了。
+set_input_delay  -max 2.000 -clock [get_clocks sys_clk] [get_ports sys_rst_n]
+
+#输入最大延迟，外部输入 sys_rst_n 最晚在时钟边沿后 2.000 ns 到达本芯片。
+#外部信号可能非常早到达，所以要检查输入到寄存器路径是否会造成 hold 违例
+set_input_delay  -min 0.000 -clock [get_clocks sys_clk] [get_ports sys_rst_n]
+
+#外部接收电路要求 o_led 在时钟边沿后的一定时间内稳定 ? 用于 setup 分析
+#外部设备在一个时钟周期中，需要预留 3 ns 做它自己的 setup 要求或板级延迟
+set_output_delay -max 3.000 -clock [get_clocks sys_clk] [get_ports o_led]
+
+#外部接收电路对 o_led 的最小延迟要求是 0.000 ns。 用于 hold 分析
+#它表示输出信号不能太早破坏外部设备的 hold 要求
+set_output_delay -min 0.000 -clock [get_clocks sys_clk] [get_ports o_led]
+
+#给输出端口 o_led 设置 0.050 pF 的负载电容
+set_load 0.050 [get_ports o_led]
+
+
+
+
+
+
 # 设计规则约束
 set_max_transition 0.5 [current_design]
 set_max_capacitance 1.0 [current_design]
 
-# 如果复位是异步的，需设 false path；但你是同步复位，不需额外处理
 
 
-set_drive 4 [get_ports dac_data*]   ;# 设置输出驱动电阻，数值参考 IO 库
-set_load 5.0 [get_ports dac_data*]  ;# 设置外部负载电容，单位 pF
 
-
-#######################
-#######################
-#######################
-###纯组合逻辑 用虚拟时钟（推荐）
-# 定义一个不绑定任何端口的虚拟时钟，作为时序参考
-create_clock -name vclk -period 10
-
-# 指定所有输入/输出相对于这个虚拟时钟的延迟
-set_input_delay -clock vclk 3 [all_inputs]
-set_output_delay -clock vclk 2 [all_outputs]
-###纯组合逻辑 用虚拟时钟（推荐）
-#直接约束路径最大延迟（更直观）
