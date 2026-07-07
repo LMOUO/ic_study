@@ -9,6 +9,9 @@ all: syn
 
 syn:
 	$(YOSYS) -s $(SCRIPT) | tee syn.log
+	
+
+sta:
 	sta -exit $(STA) | tee sta.log
 
 clean:
