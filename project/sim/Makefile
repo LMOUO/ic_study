@@ -2,27 +2,40 @@ IVERILOG = iverilog
 VVP      = vvp
 GTKWAVE  = gtkwave
 
-RTL      = ../rtl/uart_tx.v
-TB       = ../tb/tb_uart_tx_selfcheck.v
-TB_CHECK = ../tb/tb_uart_tx_selfcheck.v
+#入口参数
+TOP 	?= uart_tx
+RTL     ?= ../rtl/uart_tx.v
+TB      ?= ../tb/tb_uart_tx_selfcheck.v
 
-TOP      = tb_uart_tx_selfcheck
-TOP_CHECK = tb_uart_tx_selfcheck
+TB_TOP  ?= tb_$(TOP)_selfcheck
+
+BUILD_DIR = build
+WAVE_DIR  = waves
+LOG_DIR   = logs
+
+OUT = $(BUILD_DIR)/$(TB_TOP).vvp
+LOG = $(LOG_DIR)/$(TB_TOP).log
+
+.PHONY: all sim check view clean print
 
 all: sim
 
 sim:
-	$(IVERILOG) -o $(TOP).vvp $(RTL) $(TB)
-	$(VVP) $(TOP).vvp
-
-check:
-	$(IVERILOG) -o $(TOP_CHECK).vvp $(RTL) $(TB_CHECK)
-	$(VVP) $(TOP_CHECK).vvp
+	mkdir -p $(BUILD_DIR) $(WAVE_DIR) $(LOG_DIR)
+	$(IVERILOG) -o $(OUT) $(RTL) $(TB)
+	$(VVP) $(OUT) | tee $(LOG)
 
 view:	
-	$(GTKWAVE) wave.vcd &
+	$(GTKWAVE) $(WAVE_DIR)/$(TOP)_wave.vcd &
+
+print:
+	@echo "TOP      = $(TOP)"
+	@echo "RTL      = $(RTL)"
+	@echo "TB       = $(TB)"
+	@echo "TB_TOP   = $(TB_TOP)"
+	@echo "OUT      = $(OUT)"
+	@echo "LOG      = $(LOG)"
 
 clean:
+	rm -rf $(BUILD_DIR) $(WAVE_DIR) $(LOG_DIR)
 	rm -f *.vvp *.vcd
-
-.PHONY: all sim check view clean
