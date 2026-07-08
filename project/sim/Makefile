@@ -19,7 +19,7 @@ check:
 	$(IVERILOG) -o $(TOP_CHECK).vvp $(RTL) $(TB_CHECK)
 	$(VVP) $(TOP_CHECK).vvp
 
-view:
+view:	
 	$(GTKWAVE) wave.vcd &
 
 clean:
