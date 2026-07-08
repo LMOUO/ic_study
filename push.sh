@@ -11,9 +11,9 @@ cd "$REPO_ROOT"
 
 # 删除仿真产生的临时文件（可选）
 echo "清理临时文件..."
-cd workspaces/ic_study/project/sim && make clean
-cd workspaces/ic_study/project/syn && make clean
-cd workspaces/ic_study
+cd /workspaces/ic_study/project/sim && make clean
+cd /workspaces/ic_study/project/syn && make clean
+cd /workspaces/ic_study
 
 # 提交信息，默认为 "更新代码"
 MSG=${1:-"更新代码"}
