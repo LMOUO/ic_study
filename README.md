@@ -13,6 +13,7 @@
 push.sh     项目管理推送git脚本
 
 2026年七月8日
+源代码：
 1. 模块功能：UART 发送模块
 2. 输入输出端口说明
 3. 参数说明：CLK_FREQ / UART_BPS
@@ -21,5 +22,10 @@ push.sh     项目管理推送git脚本
 6. 综合结果：cell 137  area 255.360000
 7. STA 结果：setup 通过，hold 有轻微 pre-layout violation
 8. 结论：UART_TX 完成
+
+脚本：
+1. 综合和仿真脚本可参数化一键运行
+2. 版本管理推送脚本修改简洁
+
 
 
