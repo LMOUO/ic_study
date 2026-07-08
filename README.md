@@ -18,7 +18,7 @@ push.sh     项目管理推送git脚本
 3. 参数说明：CLK_FREQ / UART_BPS
 4. 帧格式：1 start + 8 data + 1 stop
 5. 验证 case 列表
-6. 综合结果：cell 数量 / area
+6. 综合结果：cell 137  area 255.360000
 7. STA 结果：setup 通过，hold 有轻微 pre-layout violation
 8. 结论：UART_TX 完成
 

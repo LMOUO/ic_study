@@ -19,7 +19,7 @@ initial sys_clk = 0;
 always #10 sys_clk = ~sys_clk;
 
 initial begin
-    $dumpfile("../sim/wave.vcd");
+    $dumpfile("../sim/waves/led_test_wave.vcd");
     $dumpvars(0, tb_led_test_selfcheck);
 
     sys_rst_n = 0;

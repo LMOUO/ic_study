@@ -46,7 +46,7 @@ initial begin
     test_pass_count = 0;
     test_fail_count = 0;
 
-    $dumpfile("../sim/uart_tx_wave.vcd");
+    $dumpfile("../sim/waves/uart_tx_wave.vcd");
     $dumpvars(0, tb_uart_tx_selfcheck);
 
     sys_rst_n = 1'b0;
