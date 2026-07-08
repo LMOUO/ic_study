@@ -2,12 +2,12 @@ IVERILOG = iverilog
 VVP      = vvp
 GTKWAVE  = gtkwave
 
-RTL      = ../rtl/led_test.v
-TB       = ../tb/tb_led_test.v
-TB_CHECK = ../tb/tb_led_test_selfcheck.v
+RTL      = ../rtl/uart_tx.v
+TB       = ../tb/tb_uart_tx_selfcheck.v
+TB_CHECK = ../tb/tb_uart_tx_selfcheck.v
 
-TOP      = tb_led_test
-TOP_CHECK = tb_led_test_selfcheck
+TOP      = tb_uart_tx_selfcheck
+TOP_CHECK = tb_uart_tx_selfcheck
 
 all: sim
 
