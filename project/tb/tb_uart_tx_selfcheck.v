@@ -17,9 +17,6 @@ reg [8*64-1:0] current_case;
 integer test_pass_count;
 integer test_fail_count;
 
-
-integer i;
-
 uart_tx #(
     .CLK_FREQ (CLK_FREQ),
     .UART_BPS (UART_BPS)
@@ -35,6 +32,15 @@ uart_tx #(
 initial sys_clk = 1'b0;
 always #10 sys_clk = ~sys_clk;   // 50 MHz
 
+//全局超时管理
+initial begin
+    #100000000; // 100 ms, timescale 1ns
+    $display("ERROR: simulation timeout, current_case=%0s, time=%0t",
+             current_case, $time);
+    $fatal;
+end
+
+//测试用例
 initial begin
     current_case    = "NONE";
     test_pass_count = 0;
@@ -95,11 +101,11 @@ end
 task send_byte;
     input [7:0] data;
     begin
-        @(posedge sys_clk);
+        @(negedge  sys_clk);
         uart_din <= data;
         uart_en  <= 1'b1;
 
-        @(posedge sys_clk);
+        @(negedge  sys_clk);
         uart_en  <= 1'b0;
         uart_din <= 8'd0;
     end
@@ -108,6 +114,7 @@ endtask
 //检查串口发送数据正确与错误
 task check_byte;
     input [7:0] expected_data;
+    integer i;
     begin
         // 等待起始位下降沿
         @(negedge uart_txd);

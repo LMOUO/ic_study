@@ -1,4 +1,4 @@
-.PHONY: all sim check syn sta clean
+.PHONY: all sim check syn sta clean back
 
 all: check syn sta
 
@@ -15,6 +15,7 @@ sta:
 	cd ./syn && make sta
 
 back:
+	mkdir -p ./backend_input
 	cp ./syn/*.v ./backend_input/
 	cp ./syn/*.log ./backend_input/
 	cp ./syn/*.sdc ./backend_input/
