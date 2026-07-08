@@ -115,16 +115,32 @@ task check_byte;
         // 起始位中点采样
         repeat (BPS_CNT / 2) @(posedge sys_clk);
         if (uart_txd !== 1'b0) begin
-            $display("ERROR: start bit wrong, time=%0t", $time);
+            $display("ERROR CASE: %0s", current_case);
+            $display("ERROR INFO: start bit wrong");
+            $display("TIME      : %0t", $time);
+            $display("EXPECTED  : 0");
+            $display("GOT       : %0b", uart_txd);
             $fatal;
         end
 
         // 8 个数据位，UART 低位先发
         for (i = 0; i < 8; i = i + 1) begin
             repeat (BPS_CNT) @(posedge sys_clk);
+
             if (uart_txd !== expected_data[i]) begin
-                $display("ERROR: data bit %0d wrong, expected=%0b, got=%0b, time=%0t",
-                         i, expected_data[i], uart_txd, $time);
+                $display("");
+                $display("=================================================");
+                $display("ERROR CASE : %0s", current_case);
+                $display("ERROR INFO : data bit mismatch");
+                $display("TIME       : %0t", $time);
+                $display("BYTE       : 0x%02h", expected_data);
+                $display("BIT INDEX  : %0d", i);
+                $display("EXPECTED   : %0b", expected_data[i]);
+                $display("GOT        : %0b", uart_txd);
+                $display("busy       : %0b", uart_tx_busy);
+                $display("uart_en    : %0b", uart_en);
+                $display("uart_din   : 0x%02h", uart_din);
+                $display("=================================================");
                 $fatal;
             end
         end
@@ -132,7 +148,11 @@ task check_byte;
         // 停止位
         repeat (BPS_CNT) @(posedge sys_clk);
         if (uart_txd !== 1'b1) begin
-            $display("ERROR: stop bit wrong, time=%0t", $time);
+            $display("ERROR CASE: %0s", current_case);
+            $display("ERROR INFO: stop bit wrong");
+            $display("TIME      : %0t", $time);
+            $display("EXPECTED  : 1");
+            $display("GOT       : %0b", uart_txd);
             $fatal;
         end
     end
