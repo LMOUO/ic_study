@@ -15,57 +15,24 @@ push.sh     项目管理推送git脚本
 开发进度：
 2026年7月8日
 源代码：
-1. 模块功能：UART 发送模块
-
-2. 输入输出端口说明
-input	      sys_clk,                  //系统时钟
-input         sys_rst_n,                //系统复位，低电平有效
-input         uart_en,                  //发送使能信号
-input  [7:0]  uart_din,                 //待发送数据
-output        uart_tx_busy,             //发送忙状态标志 
-output  reg   uart_txd                  //UART发送端口
-
-3. 参数说明：
-CLK_FREQ / UART_BPS
-可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
-
+1. 模块功能：UART 发送模块 uart_tx.v
+2. 输入输出端口说明：见相关module
+3. 参数说明：CLK_FREQ / UART_BPS，可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
 4. 帧格式：1 start + 8 data + 1 stop
-
-5. 验证 case 列表
-执行make后查询相关log文件
-
-6. 综合结果：
-cell 137  area 255.360000
-
-7. STA 结果：
-setup 通过，hold 有轻微 pre-layout violation
-
+5. 验证 case 列表：执行make后查询相关log文件
+6. 综合结果：cell 137  area 255.360000 具体信息查看相关log
+7. STA 结果：setup 通过，hold 有轻微 pre-layout violation
 8. 结论：UART_TX 完成
-
 脚本：
 1. 综合和仿真脚本可参数化一键运行
 2. 版本管理推送脚本修改简洁
 
 2026年7月9日
-1. 模块功能：UART 接收模块
-2. 接口说明：
-input			  sys_clk,                  //系统时钟
-input             sys_rst_n,                //系统复位，低电平有效
-    
-input             uart_rxd,                 //UART接收端口
-output  reg       uart_done,                //接收一帧数据完成标志
-output  reg       rx_flag,                  //接收过程标志信号
-output  reg [ 3:0] rx_cnt,                  //接收数据计数器
-output  reg [ 7:0] rxdata,
-output  reg [7:0] uart_data                 //接收的数据
-
-3. 参数说明：
-CLK_FREQ / UART_BPS
-可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
-
+1. 模块功能：UART 接收模块 uart_rx.v
+2. 接口说明：见相关module
+3. 参数说明：CLK_FREQ / UART_BPS，可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
 4. 帧格式：1 start + 8 data + 1 stop
-
-5. 验证 case 列表
-执行make后查询相关log文件
-
-6. 综合结果：
+5. 验证 case 列表：执行make后查询相关log文件
+6. 综合结果：cell 154  area 329.042
+7. STA 结果：setup 通过，hold 有微小 pre-layout violation
+8. 结论：UART_RX 完成
