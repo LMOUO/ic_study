@@ -4,8 +4,8 @@ GTKWAVE  = gtkwave
 
 #入口参数
 TOP 	?= uart_tx
-RTL     ?= ../rtl/uart_tx.v
-TB      ?= ../tb/tb_uart_tx_selfcheck.v
+RTL     ?= ../rtl/$(TOP).v
+TB      ?= ../tb/tb_$(TOP)_selfcheck.v
 
 TB_TOP  ?= tb_$(TOP)_selfcheck
 
