@@ -5,9 +5,6 @@ module uart_rx
     
     input             uart_rxd,                 //UART接收端口
     output  reg       uart_done,                //接收一帧数据完成标志
-    output  reg       rx_flag,                  //接收过程标志信号
-    output  reg [ 3:0] rx_cnt,                  //接收数据计数器
-    output  reg [ 7:0] rxdata,
     output  reg [7:0] uart_data                 //接收的数据
 );
     
@@ -20,6 +17,11 @@ localparam  BPS_CNT  = CLK_FREQ/UART_BPS;       //为得到指定波特率，
 reg        uart_rxd_d0;
 reg        uart_rxd_d1;
 reg [15:0] clk_cnt;                              //系统时钟计数器
+
+reg       rx_flag;                  //接收过程标志信号
+reg [ 3:0] rx_cnt;                  //接收数据计数器
+reg [ 7:0] rxdata;
+
 
 //wire define
 wire       start_flag;
