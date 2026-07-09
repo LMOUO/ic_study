@@ -20,7 +20,7 @@ always #10  sys_clk = ~sys_clk  ;
 
 //全局超时管理
 initial begin
-    #1000000000                                                      ; // 100 ms, timescale 1ns
+    #50000000                                                      ; // 50 ms, timescale 1ns
     $display("ERROR: simulation timeout, current_case=%0s, time=%0t",
              current_case, $time)                                   ;
     $fatal                                                          ;
@@ -80,7 +80,8 @@ initial begin
 	send_and_check(8'h5A);
 	end_case();    
 
-
+    $display("PASS: uart_loopback self-check simulation passed.");
+    $finish;
 end
 
 

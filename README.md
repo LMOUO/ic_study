@@ -14,25 +14,39 @@ push.sh     项目管理推送git脚本
 
 开发进度：
 2026年7月8日
-源代码：
+模块：
 1. 模块功能：UART 发送模块 uart_tx.v
 2. 输入输出端口说明：见相关module
 3. 参数说明：CLK_FREQ / UART_BPS，可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
 4. 帧格式：1 start + 8 data + 1 stop
 5. 验证 case 列表：执行make后查询相关log文件
 6. 综合结果：cell 137  area 255.360000 具体信息查看相关log
-7. STA 结果：setup 通过，hold 有轻微 pre-layout violation
+7. STA 结果：setup 通过，hold 有轻微 pre-layout violation 具体信息查看相关log
 8. 结论：UART_TX 完成
 脚本：
 1. 综合和仿真脚本可参数化一键运行
 2. 版本管理推送脚本修改简洁
 
 2026年7月9日
-1. 模块功能：UART 接收模块 uart_rx.v
-2. 接口说明：见相关module
-3. 参数说明：CLK_FREQ / UART_BPS，可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
-4. 帧格式：1 start + 8 data + 1 stop
-5. 验证 case 列表：执行make后查询相关log文件
-6. 综合结果：cell 154  area 329.042
-7. STA 结果：setup 通过，hold 有微小 pre-layout violation
-8. 结论：UART_RX 完成
+模块：UART 接收模块 uart_rx.v
+1. 接口说明：见相关module
+2. 参数说明：CLK_FREQ / UART_BPS，可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
+3. 帧格式：1 start + 8 data + 1 stop
+4. 验证 case 列表：执行make后查询相关log文件
+5. 综合结果：cell 154  area 329.042 具体信息查看相关log
+6. STA 结果：setup 通过，hold 有微小 pre-layout violation 具体信息查看相关log
+7. 结论：UART_RX 完成
+
+模块：UART 回环模块 uart_loopback.v
+1. 接口说明：见相关module
+2. 参数说明：CLK_FREQ / UART_BPS，可配置，本次测试采用50M的CLK_FREQ和9600的UART_BPS
+3. 帧格式：1 start + 8 data + 1 stop
+4. 验证 case 列表：执行make后查询相关log文件
+5. 综合结果：cell 365  area 744.534 具体信息查看相关log
+6. STA 结果：setup 通过，hold 有微小 pre-layout violation 具体信息查看相关log
+7. 结论：UART_LOOPBACK 完成
+
+脚本：
+1. 注意在现有环境下多个v文件编译需要在顶层中inclue，暂时未做多个v文件同时编译的脚本
+
+
