@@ -22,7 +22,7 @@ push.sh     项目管理推送git脚本
 2. 输入输出端口说明：见相关module
 3. 参数说明：无
 4. 验证 case 列表：执行make后查询相关log文件
-6. 综合结果：cell 137  area 255.360000 具体信息查看相关log
+6. 综合结果：cell 35  area 72.352 具体信息查看相关log
 7. STA 结果：setup 通过，hold 有轻微 pre-layout violation 具体信息查看相关log
 8. 结论：led_test 完成
 
