@@ -1,3 +1,5 @@
+`include "../rtl/mem_sdp_sync.v"
+
 module	sync_fifo_my
 #(
     parameter DATA_WIDTH = 8,

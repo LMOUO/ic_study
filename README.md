@@ -13,6 +13,19 @@
 push.sh     项目管理推送git脚本
 
 开发进度：
+2026年7月6日
+安装Yosys和OpenSTA等相关开发环境
+
+2026年7月7日
+模块：
+1. 模块功能：led_test 环境测试模块 led_test.v
+2. 输入输出端口说明：见相关module
+3. 参数说明：无
+4. 验证 case 列表：执行make后查询相关log文件
+6. 综合结果：cell 137  area 255.360000 具体信息查看相关log
+7. STA 结果：setup 通过，hold 有轻微 pre-layout violation 具体信息查看相关log
+8. 结论：led_test 完成
+
 2026年7月8日
 模块：
 1. 模块功能：UART 发送模块 uart_tx.v
@@ -48,5 +61,23 @@ push.sh     项目管理推送git脚本
 
 脚本：
 1. 注意在现有环境下多个v文件编译需要在顶层中inclue，暂时未做多个v文件同时编译的脚本
+
+2026年7月10日
+模块：SYNC_FIFO 同步FIFO模块 sync_fifo_my.v
+1. 接口说明：见相关module
+2. 参数说明：位宽8字节，深度128，可配置
+3. 验证 case 列表：执行make后查询相关log文件
+5. 综合结果：cell 3774  area 8690 具体信息查看相关log
+6. STA 结果：setup 通过，hold 巨大违例
+原因：
+128×8 memory 被展开成1032个DFF和大量MUX；
+memory占面积约97.5%；
+地址和写使能网络产生数百扇出；
+输入hold违例被1024个存储位大量复制。
+7. 结论：
+综合通过，静态时序分析未通过，并且大量面积被memory占用
+具体原因是Nangate45 标准单元库中没有配置可映射的 SRAM 宏
+最后，不是按照mem的形式综合，被展开综合。
+
 
 
